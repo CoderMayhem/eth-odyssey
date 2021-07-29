@@ -50,22 +50,6 @@ class App extends Component {
     this.setState({ storageValue: response });
   };
 
-  render() {
-    if (!this.state.loaded) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
-    return (
-      <div className="App">
-        <h1>Simply Payment/Supply Chain Example!</h1>
-        <h2>Items</h2>
-
-        <h2>Add Element</h2>
-        Cost: <input type="text" name="cost" value={this.state.cost} onChange={this.handleInputChange} />
-        Item Name: <input type="text" name="itemName" value={this.state.itemName} onChange={this.handleInputChange} />
-        <button type="button" onClick={this.handleSubmit}>Create new Item</button>
-      </div>
-    );
-  }
   handleSubmit = async () => {
     const { cost, itemName } = this.state;
     console.log(itemName, cost, this.itemManager);
@@ -82,6 +66,26 @@ class App extends Component {
     this.setState({
       [name]: value
     });
+  }
+
+  render() {
+    if (!this.state.loaded) {
+      return <div>Loading Web3, accounts, and contract...</div>;
+    }
+    return (
+      <div className="App">
+        <h1>Simply Payment/Supply Chain Example!</h1>
+
+        <h2>Add Element</h2>
+        Cost in Wei: <input type="text" name="cost" value={this.state.cost} onChange={this.handleInputChange} />
+        <br></br>
+        <br></br>
+        Item Name: <input type="text" name="itemName" value={this.state.itemName} onChange={this.handleInputChange} />
+        <br></br>
+        <br></br>
+        <button type="button" onClick={this.handleSubmit}>Create new Item</button>
+      </div>
+    );
   }
 
   listenToPaymentEvent = () => {
