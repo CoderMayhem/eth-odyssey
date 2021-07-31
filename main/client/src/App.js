@@ -68,6 +68,18 @@ class App extends Component {
     });
   }
 
+  listenToPaymentEvent = () => {
+    let self = this;
+    this.itemManager.events.SupplyChainStep().on("data", async function(evt) {
+      if(evt.returnValues._step === 1) {
+        let item = await self.itemManager.methods.items(evt.returnValues._itemIndex).call();
+        console.log(item);
+        alert("Item " + item._identifier + " was paid, deliver it now!");
+      };
+      console.log(evt);
+    });
+  }
+
   render() {
     if (!this.state.loaded) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -88,17 +100,7 @@ class App extends Component {
     );
   }
 
-  listenToPaymentEvent = () => {
-    let self = this;
-    this.itemManager.events.SupplyChainStep().on("data", async function(evt) {
-      if(evt.returnValues._step === 1) {
-        let item = await self.itemManager.methods.items(evt.returnValues._itemIndex).call();
-        console.log(item);
-        alert("Item " + item._identifier + " was paid, deliver it now!");
-      };
-      console.log(evt);
-    });
-  }
+  
 }
 
 export default App;
